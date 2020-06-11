@@ -28,7 +28,7 @@
     {
       "definition": "tile",
       "name": "Ground",
-      "gridSize": {"x": 8, "y": 8},
+      "gridSize": {"x": 128, "y": 128},
       "exportID": "85001857",
       "exportMode": 0,
       "arrayMode": 0,

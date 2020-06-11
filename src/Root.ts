@@ -3,10 +3,12 @@ import {
     useNewComponent,
     useChild,
     Canvas,
+    Ogmo,
     Physics,
 } from "@hex-engine/2d";
-import Enemy from "./Enemy";
 import Player from "./Player";
+import ogmoProject from "./game2020.ogmo";
+import level1 from "./levels/level1.json";
 
 export default function Root(): void {
     useType(Root);
@@ -16,8 +18,8 @@ export default function Root(): void {
 
     useNewComponent(Physics.Engine);
 
-    // useChild(() => Floor(canvasCenter.addY(100)));
-    // useChild(() => Box(canvasCenter));
-    useChild(() => Player());
-    useChild(() => Enemy());
+    const ogmo = useNewComponent(() => Ogmo.Project(ogmoProject, {
+        Player: data => useChild(() => Player(data))
+    }));
+    ogmo.useLevel(level1);
 }

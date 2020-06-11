@@ -7,10 +7,10 @@ import {
     useUpdate,
 } from "@hex-engine/2d";
 
-export default function Player(): void {
+export default function Player(options: any): void {
     useType(Player);
-    let posX = 0;
-    let posY = 0;
+    let posX = options.x;
+    let posY = options.y;
 
     const player = useNewComponent(() =>
         Image({
