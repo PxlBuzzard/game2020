@@ -4,8 +4,8 @@ import {
     useChild,
     Canvas,
     Physics,
-    Vector,
 } from "@hex-engine/2d";
+import Enemy from "./Enemy";
 import Player from "./Player";
 
 export default function Root(): void {
@@ -19,4 +19,5 @@ export default function Root(): void {
     // useChild(() => Floor(canvasCenter.addY(100)));
     // useChild(() => Box(canvasCenter));
     useChild(() => Player());
+    useChild(() => Enemy());
 }

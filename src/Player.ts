@@ -14,7 +14,7 @@ export default function Player(): void {
 
     const player = useNewComponent(() =>
         Image({
-            url: "./assets/idle_1.png"
+            url: "../assets/idle_1.png"
         })
     );
 
