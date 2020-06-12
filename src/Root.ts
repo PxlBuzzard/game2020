@@ -8,7 +8,7 @@ import {
 } from "@hex-engine/2d";
 import Player from "./Player";
 import ogmoProject from "./game2020.ogmo";
-import level1 from "./levels/level1.json";
+import testLevel from "./levels/level2.json";
 
 export default function Root(): void {
     useType(Root);
@@ -21,5 +21,5 @@ export default function Root(): void {
     const ogmo = useNewComponent(() => Ogmo.Project(ogmoProject, {
         Player: data => useChild(() => Player(data))
     }));
-    ogmo.useLevel(level1);
+    ogmo.useLevel(testLevel);
 }

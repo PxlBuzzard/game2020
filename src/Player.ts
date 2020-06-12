@@ -1,20 +1,22 @@
 import {
     useType,
     useNewComponent,
-    Image,
     Keyboard,
     useDraw,
     useUpdate,
+    SpriteSheet,
 } from "@hex-engine/2d";
 
 export default function Player(options: any): void {
     useType(Player);
     let posX = options.x;
-    let posY = options.y;
+    const posY = options.y;
 
     const player = useNewComponent(() =>
-        Image({
-            url: "../assets/idle_1.png"
+        SpriteSheet({
+            url: "../assets/platformer_pack/spritesheet_players.png",
+            tileWidth: 128,
+            tileHeight: 256
         })
     );
 
@@ -27,12 +29,12 @@ export default function Player(options: any): void {
     useUpdate(() => {
         keyboard.pressed.forEach(key => {
             switch (key) {
-            case "ArrowDown":
-                posY += 5;
-                break;
-            case "ArrowUp":
-                posY -= 5;
-                break;
+            // case "ArrowDown":
+            //     posY += 5;
+            //     break;
+            // case "ArrowUp":
+            //     posY -= 5;
+            //     break;
             case "ArrowLeft":
                 posX -= 5;
                 break;
@@ -46,7 +48,8 @@ export default function Player(options: any): void {
     useDraw((context) => {
         player.draw(context, {
             x: posX,
-            y: posY
+            y: posY,
+            tileIndex: 32
         });
     });
 }
