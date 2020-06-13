@@ -11,8 +11,5 @@
             "jsx": true,
             "tsx": true
         }
-    },
-    "rules": {
-        "indent": ["warn", 4]
     }
 }

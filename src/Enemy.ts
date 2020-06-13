@@ -21,13 +21,13 @@ export default function Enemy(): void {
 
     const enemy = useNewComponent(() =>
         Image({
-            url: "../assets/idle_sword_1.png"
+            url: "../assets/idle_sword_1.png",
         })
     );
 
     const geometry = useNewComponent(() =>
         Geometry({
-            shape: Polygon.rectangle(new Vector(10, 10))
+            shape: Polygon.rectangle(new Vector(10, 10)),
         })
     );
 
@@ -35,21 +35,21 @@ export default function Enemy(): void {
 
     useUpdate(() => {
         switch (Math.round(Math.random())) {
-        case 0:
-            posX += moveSpeed;
-            posY += moveSpeed;
-            break;
-        case 1:
-            posX -= moveSpeed;
-            posY -= moveSpeed;
-            break;
+            case 0:
+                posX += moveSpeed;
+                posY += moveSpeed;
+                break;
+            case 1:
+                posX -= moveSpeed;
+                posY -= moveSpeed;
+                break;
         }
     });
 
     useDraw((context) => {
         enemy.draw(context, {
             x: posX,
-            y: posY
+            y: posY,
         });
     });
 }

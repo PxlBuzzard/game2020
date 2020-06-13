@@ -19,7 +19,7 @@
   "layers": [
     {
       "definition": "entity",
-      "name": "Entities",
+      "name": "oEntities",
       "gridSize": {"x": 8, "y": 8},
       "exportID": "85077473",
       "requiredTags": [],
@@ -33,6 +33,14 @@
       "exportMode": 0,
       "arrayMode": 0,
       "defaultTileset": "Ground"
+    },
+    {
+      "definition": "grid",
+      "name": "Collision",
+      "gridSize": {"x": 32, "y": 32},
+      "exportID": "94326565",
+      "arrayMode": 0,
+      "legend": {"0": "#00000000", "1": "#00ffffff"}
     }
   ],
   "entities": [
