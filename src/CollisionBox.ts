@@ -14,7 +14,7 @@ export default function CollisionBox(width: number, height: number): void {
     const geometry = useNewComponent(() =>
         Geometry({
             shape: Polygon.rectangle(new Vector(width, height)),
-            position: new Vector(0 ,0),
+            position: new Vector(0, 0),
         })
     );
 
