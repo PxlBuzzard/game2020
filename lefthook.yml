@@ -1,11 +1,9 @@
 pre-commit:
-  parallel: true
-  commands:
-    eslint:
-      files: git diff --name-only @{push}
-      glob: "*.ts"
-      run: npx eslint {files}
-    prettier:
-      files: git diff --name-only @{push}
-      glob: "*.ts"
-      run: npx prettier --write {files}
+    parallel: true
+    commands:
+        eslint:
+            files: git diff --name-only @{push}
+            glob: "*.ts"
+            run: npx eslint {files}
+        prettier:
+            run: npx pretty-quick --staged

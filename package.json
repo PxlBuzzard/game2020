@@ -1,23 +1,24 @@
 {
-  "name": "my-hex-engine-game",
-  "version": "0.0.1",
-  "private": true,
-  "dependencies": {
-    "@hex-engine/2d": "^0.4.2"
-  },
-  "devDependencies": {
-    "@arkweid/lefthook": "^0.7.2",
-    "@typescript-eslint/eslint-plugin": "^3.2.0",
-    "@typescript-eslint/parser": "^3.2.0",
-    "eslint": "^7.2.0",
-    "hex-engine-scripts": "^0.4.1",
-    "prettier": "^2.0.5",
-    "typescript": "^3.9.5"
-  },
-  "scripts": {
-    "start": "hex-engine-scripts dev",
-    "dev": "hex-engine-scripts dev",
-    "build": "hex-engine-scripts build",
-    "test": "hex-engine-scripts test"
-  }
+    "name": "my-hex-engine-game",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "@hex-engine/2d": "^0.4.2"
+    },
+    "devDependencies": {
+        "@arkweid/lefthook": "^0.7.2",
+        "@typescript-eslint/eslint-plugin": "^3.2.0",
+        "@typescript-eslint/parser": "^3.2.0",
+        "eslint": "^7.2.0",
+        "hex-engine-scripts": "^0.4.1",
+        "prettier": "^2.0.5",
+        "pretty-quick": "^2.0.1",
+        "typescript": "^3.9.5"
+    },
+    "scripts": {
+        "start": "hex-engine-scripts dev",
+        "dev": "hex-engine-scripts dev",
+        "build": "hex-engine-scripts build",
+        "test": "hex-engine-scripts test"
+    }
 }
