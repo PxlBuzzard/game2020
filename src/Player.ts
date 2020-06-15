@@ -22,15 +22,13 @@ export default function Player(options: any): void {
         Geometry({
             shape: Polygon.rectangle(new Vector(playerWidth, playerHeight)),
             position: new Vector(
-                posX + (playerWidth / 2),
-                posY + (playerHeight / 2)
+                posX + playerWidth / 2,
+                posY + playerHeight / 2
             ),
         })
     );
 
-    const physics = useNewComponent(() =>
-        Physics.Body(geometry)
-    );
+    const physics = useNewComponent(() => Physics.Body(geometry));
 
     const player = useNewComponent(() =>
         SpriteSheet({
@@ -47,11 +45,15 @@ export default function Player(options: any): void {
             switch (key) {
                 case "ArrowUp":
                 case "w":
-                    physics.setVelocity(new Vector(physics.body.velocity.x, -3));
+                    physics.setVelocity(
+                        new Vector(physics.body.velocity.x, -3)
+                    );
                     break;
                 case "ArrowLeft":
                 case "a":
-                    physics.setVelocity(new Vector(-3, physics.body.velocity.y));
+                    physics.setVelocity(
+                        new Vector(-3, physics.body.velocity.y)
+                    );
                     break;
                 case "ArrowRight":
                 case "d":

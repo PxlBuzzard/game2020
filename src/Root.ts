@@ -19,7 +19,9 @@ import {
 export default function Root(): void {
     useType(Root);
 
-    const canvas = useNewComponent(() => Canvas({ backgroundColor: "#008ba3" }));
+    const canvas = useNewComponent(() =>
+        Canvas({ backgroundColor: "#008ba3" })
+    );
     canvas.fullscreen({ pixelZoom: 1 });
 
     const physics = useNewComponent(Physics.Engine);
