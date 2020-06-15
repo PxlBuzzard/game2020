@@ -16,20 +16,20 @@ export default function Player(options: any): void {
     const posX = options.x;
     const posY = options.y;
     const playerWidth = 100;
-    const playerHeight = 150;
+    const playerHeight = 160;
 
     const geometry = useNewComponent(() =>
         Geometry({
             shape: Polygon.rectangle(new Vector(playerWidth, playerHeight)),
             position: new Vector(
-                posX + playerWidth / 2,
-                posY + playerHeight / 2
+                posX + (playerWidth / 2),
+                posY + (playerHeight / 2)
             ),
         })
     );
 
     const physics = useNewComponent(() =>
-        Physics.Body(geometry, { isStatic: true })
+        Physics.Body(geometry)
     );
 
     const player = useNewComponent(() =>
@@ -45,26 +45,28 @@ export default function Player(options: any): void {
     useUpdate(() => {
         keyboard.pressed.forEach((key) => {
             switch (key) {
-                // case "ArrowDown":
-                //     posY += 5;
-                //     break;
-                // case "ArrowUp":
-                //     posY -= 5;
-                //     break;
+                case "ArrowUp":
+                case "w":
+                    physics.setVelocity(new Vector(physics.body.velocity.x, -3));
+                    break;
                 case "ArrowLeft":
-                    physics.setVelocity(new Vector(-2, 0));
+                case "a":
+                    physics.setVelocity(new Vector(-3, physics.body.velocity.y));
                     break;
                 case "ArrowRight":
-                    physics.setVelocity(new Vector(2, 0));
+                case "d":
+                    physics.setVelocity(new Vector(3, physics.body.velocity.y));
                     break;
             }
         });
+
+        physics.setAngle(0);
     });
 
     useDraw((context) => {
         player.draw(context, {
-            x: geometry.position.x - playerWidth,
-            y: physics.body.position.y - playerHeight * 2,
+            x: -15,
+            y: -100,
             tileIndex: 58,
         });
     });

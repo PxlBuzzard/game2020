@@ -19,12 +19,12 @@ import {
 export default function Root(): void {
     useType(Root);
 
-    const canvas = useNewComponent(() => Canvas({ backgroundColor: "#333" }));
+    const canvas = useNewComponent(() => Canvas({ backgroundColor: "#008ba3" }));
     canvas.fullscreen({ pixelZoom: 1 });
 
     const physics = useNewComponent(Physics.Engine);
     physics.debugDraw = true;
-    physics.engine.enableSleeping = true;
+    physics.engine.enableSleeping = false;
 
     const ogmo = useNewComponent(() =>
         Ogmo.Project(ogmoProject, {
