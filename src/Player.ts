@@ -21,11 +21,16 @@ export default function Player(options: any): void {
     const geometry = useNewComponent(() =>
         Geometry({
             shape: Polygon.rectangle(new Vector(playerWidth, playerHeight)),
-            position: new Vector(posX + (playerWidth / 2), posY + (playerHeight / 2)),
+            position: new Vector(
+                posX + playerWidth / 2,
+                posY + playerHeight / 2
+            ),
         })
     );
 
-    const physics = useNewComponent(() => Physics.Body(geometry, { isStatic: true }));
+    const physics = useNewComponent(() =>
+        Physics.Body(geometry, { isStatic: true })
+    );
 
     const player = useNewComponent(() =>
         SpriteSheet({
@@ -47,10 +52,10 @@ export default function Player(options: any): void {
                 //     posY -= 5;
                 //     break;
                 case "ArrowLeft":
-                    physics.setVelocity(new Vector (-2, 0));
+                    physics.setVelocity(new Vector(-2, 0));
                     break;
                 case "ArrowRight":
-                    physics.setVelocity(new Vector (2, 0));
+                    physics.setVelocity(new Vector(2, 0));
                     break;
             }
         });

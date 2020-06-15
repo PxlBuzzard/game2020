@@ -8,7 +8,11 @@ import {
     useDraw,
 } from "@hex-engine/2d";
 
-export default function CollisionBox(width: number, height: number, position: Vector): void {
+export default function CollisionBox(
+    width: number,
+    height: number,
+    position: Vector
+): void {
     useType(CollisionBox);
 
     const geometry = useNewComponent(() =>

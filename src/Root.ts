@@ -53,7 +53,18 @@ function createCollisionGrid(level: OgmoLevelApi): void {
                         x++;
                     } while (parseInt(collisionLayer.grid.get(x, y)) === item);
 
-                    useChild(() => CollisionBox(width, collisionLayer.projectLayer.gridSize.y, new Vector(collisionLayer.projectLayer.gridSize.x * x - (width / 2), collisionLayer.projectLayer.gridSize.y * y + (collisionLayer.projectLayer.gridSize.y / 2))));
+                    useChild(() =>
+                        CollisionBox(
+                            width,
+                            collisionLayer.projectLayer.gridSize.y,
+                            new Vector(
+                                collisionLayer.projectLayer.gridSize.x * x -
+                                    width / 2,
+                                collisionLayer.projectLayer.gridSize.y * y +
+                                    collisionLayer.projectLayer.gridSize.y / 2
+                            )
+                        )
+                    );
                 }
             }
         }
