@@ -13,17 +13,19 @@ import {
 
 export default function Player(options: any): void {
     useType(Player);
-    let posX = options.x;
+    const posX = options.x;
     const posY = options.y;
+    const playerWidth = 100;
+    const playerHeight = 150;
 
     const geometry = useNewComponent(() =>
         Geometry({
-            shape: Polygon.rectangle(new Vector(25, 25)),
-            position: new Vector(posX, posY),
+            shape: Polygon.rectangle(new Vector(playerWidth, playerHeight)),
+            position: new Vector(posX + (playerWidth / 2), posY + (playerHeight / 2)),
         })
     );
 
-    useNewComponent(() => Physics.Body(geometry));
+    const physics = useNewComponent(() => Physics.Body(geometry, { isStatic: true }));
 
     const player = useNewComponent(() =>
         SpriteSheet({
@@ -35,8 +37,6 @@ export default function Player(options: any): void {
 
     const keyboard = useNewComponent(() => Keyboard());
 
-    //useNewComponent(() => Physics.Body(player));
-
     useUpdate(() => {
         keyboard.pressed.forEach((key) => {
             switch (key) {
@@ -47,10 +47,10 @@ export default function Player(options: any): void {
                 //     posY -= 5;
                 //     break;
                 case "ArrowLeft":
-                    posX -= 5;
+                    physics.setVelocity(new Vector (-2, 0));
                     break;
                 case "ArrowRight":
-                    posX += 5;
+                    physics.setVelocity(new Vector (2, 0));
                     break;
             }
         });
@@ -58,9 +58,9 @@ export default function Player(options: any): void {
 
     useDraw((context) => {
         player.draw(context, {
-            x: posX,
-            y: posY,
-            tileIndex: 32,
+            x: geometry.position.x - playerWidth,
+            y: physics.body.position.y - playerHeight * 2,
+            tileIndex: 58,
         });
     });
 }

@@ -22,7 +22,9 @@ export default function Root(): void {
     const canvas = useNewComponent(() => Canvas({ backgroundColor: "#333" }));
     canvas.fullscreen({ pixelZoom: 1 });
 
-    useNewComponent(Physics.Engine);
+    const physics = useNewComponent(Physics.Engine);
+    physics.debugDraw = true;
+    physics.engine.enableSleeping = true;
 
     const ogmo = useNewComponent(() =>
         Ogmo.Project(ogmoProject, {
@@ -44,14 +46,14 @@ function createCollisionGrid(level: OgmoLevelApi): void {
             for (let y = 0; y < collisionLayer.grid.size.y; y++) {
                 let item = parseInt(collisionLayer.grid.get(x, y));
                 if (item > 0) {
-                    let width = 0;
+                    let width = collisionLayer.projectLayer.gridSize.x;
                     do {
                         item = parseInt(collisionLayer.grid.get(x, y));
                         width += collisionLayer.projectLayer.gridSize.x;
                         x++;
-                    } while (parseInt(collisionLayer.grid.get(x, y)) !== item);
+                    } while (parseInt(collisionLayer.grid.get(x, y)) === item);
 
-                    useChild(() => CollisionBox(width, 32));
+                    useChild(() => CollisionBox(width, collisionLayer.projectLayer.gridSize.y, new Vector(collisionLayer.projectLayer.gridSize.x * x - (width / 2), collisionLayer.projectLayer.gridSize.y * y + (collisionLayer.projectLayer.gridSize.y / 2))));
                 }
             }
         }
