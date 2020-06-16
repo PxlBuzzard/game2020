@@ -48,7 +48,7 @@ function createCollisionGrid(level: OgmoLevelApi): void {
             for (let y = 0; y < collisionLayer.grid.size.y; y++) {
                 let item = parseInt(collisionLayer.grid.get(x, y));
                 if (item > 0) {
-                    let width = collisionLayer.projectLayer.gridSize.x;
+                    let width = 0;
                     do {
                         item = parseInt(collisionLayer.grid.get(x, y));
                         width += collisionLayer.projectLayer.gridSize.x;
