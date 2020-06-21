@@ -15,6 +15,7 @@ import {
     OgmoLevelGridLayer,
     OgmoLevelApi,
 } from "@hex-engine/2d/src/Components/Ogmo";
+import Camera from "./Camera";
 
 export default function Root(): void {
     useType(Root);
@@ -34,6 +35,8 @@ export default function Root(): void {
         })
     );
     const level = ogmo.useLevel(testLevel);
+
+    useNewComponent(() => Camera());
 
     createCollisionGrid(level);
 }
