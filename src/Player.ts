@@ -9,6 +9,7 @@ import {
     Polygon,
     SpriteSheet,
     Vector,
+    Timer,
 } from "@hex-engine/2d";
 
 export default function Player(options: any): void {
@@ -17,6 +18,12 @@ export default function Player(options: any): void {
     const posY = options.y;
     const playerWidth = 100;
     const playerHeight = 160;
+    const runSpriteTimer = useNewComponent(() => Timer());
+    let currentRunSprite = 0;
+    const runSprites = [58, 11, 50, 3];
+    const restSprite = 19;
+    let currentSprite = restSprite;
+    let facingRight = true;
 
     const geometry = useNewComponent(() =>
         Geometry({
@@ -28,7 +35,11 @@ export default function Player(options: any): void {
         })
     );
 
-    const physics = useNewComponent(() => Physics.Body(geometry));
+    const physics = useNewComponent(() =>
+        Physics.Body(geometry, {
+            // friction: 0.9,
+        })
+    );
 
     const player = useNewComponent(() =>
         SpriteSheet({
@@ -41,6 +52,11 @@ export default function Player(options: any): void {
     const keyboard = useNewComponent(() => Keyboard());
 
     useUpdate(() => {
+        // loop run animation
+        if (currentRunSprite >= runSprites.length - 1) {
+            currentRunSprite = 0;
+        }
+        currentSprite = restSprite;
         keyboard.pressed.forEach((key) => {
             switch (key) {
                 case "ArrowUp":
@@ -51,13 +67,27 @@ export default function Player(options: any): void {
                     break;
                 case "ArrowLeft":
                 case "a":
+                    facingRight = false;
                     physics.setVelocity(
                         new Vector(-3, physics.body.velocity.y)
                     );
+
+                    currentSprite = runSprites[currentRunSprite];
+                    if (runSpriteTimer.hasReachedSetTime()) {
+                        currentSprite = runSprites[currentRunSprite++];
+                        runSpriteTimer.setToTimeFromNow(40);
+                    }
                     break;
                 case "ArrowRight":
                 case "d":
+                    facingRight = true;
                     physics.setVelocity(new Vector(3, physics.body.velocity.y));
+
+                    currentSprite = runSprites[currentRunSprite];
+                    if (runSpriteTimer.hasReachedSetTime()) {
+                        currentSprite = runSprites[currentRunSprite++];
+                        runSpriteTimer.setToTimeFromNow(40);
+                    }
                     break;
             }
         });
@@ -66,10 +96,16 @@ export default function Player(options: any): void {
     });
 
     useDraw((context) => {
+        // flip the character if facing left
+        if (!facingRight) {
+            context.translate(100, 0);
+            context.scale(-1, 1);
+        }
+
         player.draw(context, {
             x: -15,
-            y: -100,
-            tileIndex: 58,
+            y: -96,
+            tileIndex: currentSprite,
         });
     });
 }
