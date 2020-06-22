@@ -62,7 +62,7 @@ export default function Player(options: any): void {
                 case "ArrowUp":
                 case "w":
                     physics.setVelocity(
-                        new Vector(physics.body.velocity.x, -3)
+                        new Vector(physics.body.velocity.x, -6)
                     );
                     break;
                 case "ArrowLeft":

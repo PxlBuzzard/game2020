@@ -17,6 +17,7 @@ import {
 } from "@hex-engine/2d/src/Components/Ogmo";
 import Camera from "./Camera";
 import Background from "./Background";
+import Coin from "./Coin";
 
 export default function Root(): void {
     useType(Root);
@@ -27,12 +28,13 @@ export default function Root(): void {
     canvas.fullscreen({ pixelZoom: 1 });
 
     const physics = useNewComponent(Physics.Engine);
-    // physics.debugDraw = true;
+    physics.debugDraw = true;
     physics.engine.enableSleeping = false;
 
     const ogmo = useNewComponent(() =>
         Ogmo.Project(ogmoProject, {
             Player: (data) => useChild(() => Player(data)),
+            Coin: (data) => useChild(() => Coin(data)),
         })
     );
     const level = ogmo.useLevel(testLevel);
