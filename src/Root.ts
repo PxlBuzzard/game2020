@@ -6,6 +6,9 @@ import {
     Ogmo,
     Physics,
     Vector,
+    Entity,
+    Component,
+    useRootEntity,
 } from "@hex-engine/2d";
 import Player from "./Player";
 import ogmoProject from "./game2020.ogmo";
@@ -19,11 +22,15 @@ import Camera from "./Camera";
 import Background from "./Background";
 import Coin from "./Coin";
 
+type PlayerEnt = Entity & {
+    rootComponent: Component /*& ReturnType<typeof Player>*/;
+};
+
 export default function Root(): void {
     useType(Root);
 
     const canvas = useNewComponent(() =>
-        Canvas({ backgroundColor: "#008ba3" })
+        Canvas({ backgroundColor: "#c4edf0" })
     );
     canvas.fullscreen({ pixelZoom: 1 });
 
@@ -31,9 +38,14 @@ export default function Root(): void {
     physics.debugDraw = true;
     physics.engine.enableSleeping = false;
 
+    const playerStorage = useNewComponent(PlayerEntityStorage);
+
     const ogmo = useNewComponent(() =>
         Ogmo.Project(ogmoProject, {
-            Player: (data) => useChild(() => Player(data)),
+            Player: (data) => {
+                playerStorage.player = useChild(() => Player(data));
+                return playerStorage.player;
+            },
             Coin: (data) => useChild(() => Coin(data)),
         })
     );
@@ -79,4 +91,19 @@ function createCollisionGrid(level: OgmoLevelApi): void {
             }
         }
     }
+}
+
+function PlayerEntityStorage(): {
+    player?: PlayerEnt | null;
+} {
+    useType(PlayerEntityStorage);
+    const player: PlayerEnt | null = null;
+
+    return { player };
+}
+
+export function usePlayer() {
+    const playerStorage = useRootEntity().getComponent(PlayerEntityStorage);
+    const player = playerStorage!.player;
+    return player;
 }

@@ -9,26 +9,17 @@ import {
     Canvas,
 } from "@hex-engine/2d";
 import Player from "./Player";
+import { usePlayer } from "./Root";
 
 export default function Camera(): void {
     useType(Camera);
-    const rootEnt = useRootEntity();
-    if (rootEnt == undefined) {
-        console.error("Camera is missing root entity");
-    }
-    const player = rootEnt.children
-        .values()
-        .next()
-        .value.children.values()
-        .next().value as Entity;
-    if (player == undefined) {
-        console.error("Camera is missing Player");
-    }
-    const playerGeo = player.getComponent(Geometry);
+
+    const player = usePlayer();
+    const playerGeo = player!.getComponent(Geometry);
     let posX = 0;
     let posY = 0;
 
-    const canvas = rootEnt.getComponent(Canvas);
+    const canvas = useRootEntity().getComponent(Canvas);
 
     // for (let component of player?.entity.components.values()) {
     //     if (component.type?.name === "Geometry") {
