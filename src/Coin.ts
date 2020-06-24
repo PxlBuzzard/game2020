@@ -40,9 +40,12 @@ export default function Coin(options: any): void {
 
     useUpdate(() => {
         const py =
-            10 * Math.sin(physicsEngine.engine!.timing.timestamp * 0.002);
+            0.15 * Math.sin(physicsEngine.engine!.timing.timestamp * 0.002);
         physics.setVelocity(new Vector(0, py - geometry.position.y));
-        geometry.position = new Vector(geometry.position.x, py);
+        geometry.position = new Vector(
+            geometry.position.x,
+            geometry.position.y - py
+        );
     });
 
     useDraw((context) => {
