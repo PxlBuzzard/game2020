@@ -4,11 +4,8 @@ import {
     useRootEntity,
     useUpdate,
     Geometry,
-    Component,
-    Entity,
     Canvas,
 } from "@hex-engine/2d";
-import Player from "./Player";
 import { usePlayer } from "./Root";
 
 export default function Camera(): void {
@@ -20,12 +17,6 @@ export default function Camera(): void {
     let posY = 0;
 
     const canvas = useRootEntity().getComponent(Canvas);
-
-    // for (let component of player?.entity.components.values()) {
-    //     if (component.type?.name === "Geometry") {
-    //         playerGeo = component as Geometry;
-    //     }
-    // }
 
     useUpdate(() => {
         if (playerGeo != undefined && canvas != undefined) {

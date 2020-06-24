@@ -1,15 +1,13 @@
 {
-    "plugins": [
-        "@typescript-eslint"
-    ],
-    "extends": [
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended"
-    ],
+    "plugins": ["@typescript-eslint"],
+    "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true,
             "tsx": true
         }
+    },
+    "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off"
     }
 }
