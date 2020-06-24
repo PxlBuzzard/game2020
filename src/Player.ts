@@ -11,6 +11,7 @@ import {
     Vector,
     Timer,
 } from "@hex-engine/2d";
+import { usePlayer } from "./Root";
 
 export default function Player(options: any): void {
     useType(Player);
@@ -24,6 +25,8 @@ export default function Player(options: any): void {
     const restSprite = 19;
     let currentSprite = restSprite;
     let facingRight = true;
+
+    const playerDataStorage = useNewComponent(PlayerDataStorage);
 
     const geometry = useNewComponent(() =>
         Geometry({
@@ -40,6 +43,13 @@ export default function Player(options: any): void {
             // friction: 0.9,
         })
     );
+
+    physics.onCollision((collider) => {
+        if (collider.entity?.name === "Coin") {
+            playerDataStorage.coins++;
+            collider.entity.destroy();
+        }
+    });
 
     const player = useNewComponent(() =>
         SpriteSheet({
@@ -108,4 +118,19 @@ export default function Player(options: any): void {
             tileIndex: currentSprite,
         });
     });
+}
+
+type PlayerData = {
+    coins: number;
+};
+
+function PlayerDataStorage(): PlayerData {
+    useType(PlayerDataStorage);
+    const coins = 0;
+
+    return { coins };
+}
+
+export function getPlayerData() {
+    return usePlayer().getComponent(PlayerDataStorage);
 }

@@ -21,9 +21,10 @@ import {
 import Camera from "./Camera";
 import Background from "./Background";
 import Coin from "./Coin";
+import LevelHUD from "./LevelHUD";
 
 type PlayerEnt = Entity & {
-    rootComponent: Component /*& ReturnType<typeof Player>*/;
+    rootComponent: Component;
 };
 
 export default function Root(): void {
@@ -37,6 +38,9 @@ export default function Root(): void {
     const physics = useNewComponent(Physics.Engine);
     physics.debugDraw = true;
     physics.engine.enableSleeping = false;
+
+    const physicsStorage = useNewComponent(PhysicsEngineStorage);
+    physicsStorage.engine = physics.engine;
 
     const playerStorage = useNewComponent(PlayerEntityStorage);
 
@@ -54,6 +58,8 @@ export default function Root(): void {
     useNewComponent(() => Background());
 
     useNewComponent(() => Camera());
+
+    useNewComponent(() => LevelHUD());
 
     createCollisionGrid(level);
 }
@@ -102,8 +108,21 @@ function PlayerEntityStorage(): {
     return { player };
 }
 
-export function usePlayer() {
+export function usePlayer(): PlayerEnt {
     const playerStorage = useRootEntity().getComponent(PlayerEntityStorage);
-    const player = playerStorage!.player;
+    const player = playerStorage!.player!;
     return player;
+}
+
+function PhysicsEngineStorage(): {
+    engine?: Matter.Engine | null;
+} {
+    useType(PhysicsEngineStorage);
+    const engine: Matter.Engine | null = null;
+
+    return { engine };
+}
+
+export function usePhysicsEngine() {
+    return useRootEntity().getComponent(PhysicsEngineStorage);
 }

@@ -7,7 +7,9 @@ import {
     Physics,
     useDraw,
     SpriteSheet,
+    useUpdate,
 } from "@hex-engine/2d";
+import { usePhysicsEngine } from "./Root";
 
 export default function Coin(options: any): void {
     useType(Coin);
@@ -22,8 +24,11 @@ export default function Coin(options: any): void {
     const physics = useNewComponent(() =>
         Physics.Body(geometry, {
             isStatic: true,
+            isSensor: true,
         })
     );
+
+    const physicsEngine = usePhysicsEngine()!;
 
     const image = useNewComponent(() =>
         SpriteSheet({
@@ -33,12 +38,17 @@ export default function Coin(options: any): void {
         })
     );
 
-    useNewComponent(() => Physics.Body(geometry, { isStatic: true }));
+    useUpdate(() => {
+        const py =
+            10 * Math.sin(physicsEngine.engine!.timing.timestamp * 0.002);
+        physics.setVelocity(new Vector(0, py - geometry.position.y));
+        geometry.position = new Vector(geometry.position.x, py);
+    });
 
     useDraw((context) => {
         image.draw(context, {
-            x: geometry.position.x - 135,
-            y: geometry.position.y - 106,
+            x: -32,
+            y: -32,
             tileIndex: 29,
         });
     });
