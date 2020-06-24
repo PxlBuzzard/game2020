@@ -25,6 +25,7 @@ export default function Player(options: any): void {
     const restSprite = 19;
     let currentSprite = restSprite;
     let facingRight = true;
+    let isJumping = false;
 
     const playerDataStorage = useNewComponent(PlayerDataStorage);
 
@@ -48,6 +49,8 @@ export default function Player(options: any): void {
         if (collider.entity?.name === "Coin") {
             playerDataStorage.coins++;
             collider.entity.destroy();
+        } else if (collider.entity?.name === "CollisionBox") {
+            isJumping = false;
         }
     });
 
@@ -67,13 +70,22 @@ export default function Player(options: any): void {
             currentRunSprite = 0;
         }
         currentSprite = restSprite;
+
+        // slow player down
+        physics.setVelocity(
+            new Vector(physics.body.velocity.x / 2, physics.body.velocity.y)
+        );
+
         keyboard.pressed.forEach((key) => {
             switch (key) {
                 case "ArrowUp":
                 case "w":
-                    physics.setVelocity(
-                        new Vector(physics.body.velocity.x, -6)
-                    );
+                    if (!isJumping) {
+                        isJumping = true;
+                        physics.setVelocity(
+                            new Vector(physics.body.velocity.x, -6)
+                        );
+                    }
                     break;
                 case "ArrowLeft":
                 case "a":
