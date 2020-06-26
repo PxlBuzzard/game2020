@@ -10,6 +10,7 @@ import {
     SpriteSheet,
     Vector,
     Timer,
+    Component,
 } from "@hex-engine/2d";
 import { usePlayer } from "./Root";
 
@@ -25,7 +26,7 @@ export default function Player(options: any): void {
     const restSprite = 19;
     let currentSprite = restSprite;
     let facingRight = true;
-    let isJumping = false;
+    const isJumping = false;
 
     const playerDataStorage = useNewComponent(PlayerDataStorage);
 
@@ -50,7 +51,16 @@ export default function Player(options: any): void {
             playerDataStorage.coins++;
             collider.entity.destroy();
         } else if (collider.entity?.name === "CollisionBox") {
-            isJumping = false;
+            if (
+                collider.kind === "start" &&
+                geometry.position.y > collider.body.position.y
+            ) {
+                // collider.body.collisionFilter.group = -1;
+                collider.body.collisionFilter.mask = 1000;
+            } else if (collider.kind === "end") {
+                collider.body.collisionFilter.mask =
+                    physics.body.collisionFilter.mask;
+            }
         }
     });
 
@@ -81,7 +91,7 @@ export default function Player(options: any): void {
                 case "ArrowUp":
                 case "w":
                     if (!isJumping) {
-                        isJumping = true;
+                        // isJumping = true;
                         physics.setVelocity(
                             new Vector(physics.body.velocity.x, -6)
                         );
@@ -94,10 +104,14 @@ export default function Player(options: any): void {
                         new Vector(-3, physics.body.velocity.y)
                     );
 
-                    currentSprite = runSprites[currentRunSprite];
-                    if (runSpriteTimer.hasReachedSetTime()) {
-                        currentSprite = runSprites[currentRunSprite++];
-                        runSpriteTimer.setToTimeFromNow(40);
+                    if (!isJumping) {
+                        currentSprite = runSprites[currentRunSprite];
+                        if (runSpriteTimer.hasReachedSetTime()) {
+                            currentSprite = runSprites[currentRunSprite++];
+                            runSpriteTimer.setToTimeFromNow(40);
+                        }
+                    } else {
+                        currentSprite = runSprites[0];
                     }
                     break;
                 case "ArrowRight":
@@ -105,16 +119,21 @@ export default function Player(options: any): void {
                     facingRight = true;
                     physics.setVelocity(new Vector(3, physics.body.velocity.y));
 
-                    currentSprite = runSprites[currentRunSprite];
-                    if (runSpriteTimer.hasReachedSetTime()) {
-                        currentSprite = runSprites[currentRunSprite++];
-                        runSpriteTimer.setToTimeFromNow(40);
+                    if (!isJumping) {
+                        currentSprite = runSprites[currentRunSprite];
+                        if (runSpriteTimer.hasReachedSetTime()) {
+                            currentSprite = runSprites[currentRunSprite++];
+                            runSpriteTimer.setToTimeFromNow(40);
+                        }
+                    } else {
+                        currentSprite = runSprites[0];
                     }
                     break;
             }
         });
 
         physics.setAngle(0);
+        physics.setAngularVelocity(0);
     });
 
     useDraw((context) => {
@@ -143,6 +162,6 @@ function PlayerDataStorage(): PlayerData {
     return { coins };
 }
 
-export function getPlayerData() {
+export function getPlayerData(): (PlayerData & Component) | null {
     return usePlayer().getComponent(PlayerDataStorage);
 }

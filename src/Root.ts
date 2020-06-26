@@ -35,8 +35,12 @@ export default function Root(): void {
     );
     canvas.fullscreen({ pixelZoom: 1 });
 
-    const physics = useNewComponent(Physics.Engine);
-    physics.debugDraw = true;
+    const physics = useNewComponent(() =>
+        Physics.Engine({
+            gravity: new Vector(0, 2),
+        })
+    );
+    //physics.debugDraw = true;
     physics.engine.enableSleeping = false;
 
     const physicsStorage = useNewComponent(PhysicsEngineStorage);
@@ -123,6 +127,10 @@ function PhysicsEngineStorage(): {
     return { engine };
 }
 
-export function usePhysicsEngine() {
+export function usePhysicsEngine():
+    | ({
+          engine?: Matter.Engine | null | undefined;
+      } & Component)
+    | null {
     return useRootEntity().getComponent(PhysicsEngineStorage);
 }
