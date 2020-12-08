@@ -14,10 +14,7 @@ import Player from "./Player";
 import ogmoProject from "./game2020.ogmo";
 import testLevel from "./levels/level2.json";
 import CollisionBox from "./CollisionBox";
-import {
-    OgmoLevelGridLayer,
-    OgmoLevelApi,
-} from "@hex-engine/2d/src/Components/Ogmo";
+import { LevelGridLayer, LevelAPI } from "@hex-engine/2d/src/Components/Ogmo";
 import Camera from "./Camera";
 import Background from "./Background";
 import Coin from "./Coin";
@@ -68,8 +65,8 @@ export default function Root(): void {
     createCollisionGrid(level);
 }
 
-function createCollisionGrid(level: OgmoLevelApi): void {
-    const collisionLayer = <OgmoLevelGridLayer>(
+function createCollisionGrid(level: LevelAPI): void {
+    const collisionLayer = <LevelGridLayer>(
         level.layers.find((layer) => layer.definition === "grid")
     );
 
