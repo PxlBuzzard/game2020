@@ -1,19 +1,17 @@
-# @hex-engine/2d game
+# Game2020
 
-This repo was created using `create-hex-engine-game`.
+This game was created by Daniel Jost using [Hex Engine](https://hex-engine.dev/). I don't claim that this is fun or complete in any way, it was an experiment for a couple weeks to use a React-like library to code a game. Assets were created by [Kenney](https://kenney.itch.io/) and used here with a Creative Commons Zero license.
 
-## Usage
+## Unique features for a Hex Engine game
 
-To run a development webserver for your game locally:
+### Player camera
+
+### Ogmo integration
+
+## Development
+
+To run a development webserver for this locally:
 
 ```sh
 npm start
 ```
-
-To build a production version of your game for redistribution:
-
-```sh
-npm run build
-```
-
-For more info, head on over to [Hex Engine's website](https://hex-engine.dev).
