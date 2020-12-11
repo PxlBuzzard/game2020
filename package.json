@@ -3,17 +3,17 @@
     "version": "1.0.0",
     "private": true,
     "dependencies": {
-        "@hex-engine/2d": "^0.8.0"
+        "@hex-engine/2d": "^0.8.1"
     },
     "devDependencies": {
         "@arkweid/lefthook": "^0.7.2",
         "@typescript-eslint/eslint-plugin": "^4.9.1",
         "@typescript-eslint/parser": "^4.9.1",
         "eslint": "^7.15.0",
-        "hex-engine-scripts": "^0.8.0",
+        "hex-engine-scripts": "^0.8.1",
         "prettier": "^2.2.1",
         "pretty-quick": "^3.1.0",
-        "typescript": "^3.9.7"
+        "typescript": "3.9.7"
     },
     "scripts": {
         "start": "hex-engine-scripts dev",

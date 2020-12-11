@@ -1,10 +1,4 @@
-import {
-    useType,
-    useNewComponent,
-    useDraw,
-    useRootEntity,
-    Canvas,
-} from "@hex-engine/2d";
+import { useType, useDraw, useRootEntity, Canvas } from "@hex-engine/2d";
 import bgImage from "../assets/Backgrounds/blue_grass.png";
 
 export default function Background(): void {
