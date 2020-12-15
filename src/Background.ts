@@ -1,5 +1,4 @@
 import { useType, useDraw, useRootEntity, Canvas } from "@hex-engine/2d";
-import bgImage from "../assets/Backgrounds/blue_grass.png";
 
 export default function Background(): void {
     useType(Background);
@@ -7,7 +6,7 @@ export default function Background(): void {
     const canvas = useRootEntity().getComponent(Canvas);
 
     const image = new Image(1024, 1024);
-    image.src = bgImage;
+    image.src = "../assets/Backgrounds/blue_grass.png";
 
     useDraw((context) => {
         if (canvas != undefined) {

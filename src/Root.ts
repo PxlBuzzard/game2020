@@ -9,12 +9,12 @@ import {
     Entity,
     Component,
     useRootEntity,
+    useDraw,
 } from "@hex-engine/2d";
 import Player from "./Player";
 import ogmoProject from "./game2020.ogmo";
 import testLevel from "./levels/level2.json";
 import CollisionBox from "./CollisionBox";
-import { LevelGridLayer, LevelAPI } from "@hex-engine/2d/src/Components/Ogmo";
 import Camera from "./Camera";
 import Background from "./Background";
 import Coin from "./Coin";
@@ -54,19 +54,16 @@ export default function Root(): void {
             Coin: (data) => useChild(() => Coin(data)),
         })
     );
-    const level = ogmo.useLevel(testLevel);
+    const level = ogmo.useLevel(testLevel, myTileRenderer);
 
     useNewComponent(() => Background());
-
     useNewComponent(() => Camera());
-
-    useNewComponent(() => LevelHUD());
-
     createCollisionGrid(level);
+    useNewComponent(() => LevelHUD());
 }
 
-function createCollisionGrid(level: LevelAPI): void {
-    const collisionLayer = <LevelGridLayer>(
+function createCollisionGrid(level: Ogmo.LevelAPI): void {
+    const collisionLayer = <Ogmo.LevelGridLayer>(
         level.layers.find((layer) => layer.definition === "grid")
     );
 
@@ -130,4 +127,14 @@ export function usePhysicsEngine():
       } & Component)
     | null {
     return useRootEntity().getComponent(PhysicsEngineStorage);
+}
+
+function myTileRenderer(layer: Ogmo.LevelTileLayer): void {
+    useType(myTileRenderer);
+
+    const { tilemap } = useNewComponent(() => Ogmo.TileLayerParser(layer));
+
+    useDraw((context) => {
+        tilemap.draw(context);
+    });
 }

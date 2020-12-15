@@ -28,6 +28,15 @@ export default function LevelHUD(): void {
         SystemFont({
             name: "Calibri",
             size: 60,
+            color: "#ffffff",
+        })
+    );
+
+    const coinCountBg = useNewComponent(() =>
+        SystemFont({
+            name: "Calibri",
+            size: 60,
+            color: "#000000",
         })
     );
 
@@ -38,9 +47,14 @@ export default function LevelHUD(): void {
             y: 0,
             tileIndex: 29,
         });
+
+        coinCountBg.drawText(context, playerData?.coins.toString() || "help", {
+            x: 112,
+            y: 87,
+        });
         coinCount.drawText(context, playerData?.coins.toString() || "help", {
             x: 110,
-            y: 43,
+            y: 85,
         });
     });
 }

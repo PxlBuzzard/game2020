@@ -4,9 +4,11 @@ This game was created by Daniel Jost using [Hex Engine](https://hex-engine.dev/)
 
 ## Unique features for a Hex Engine game
 
-### Player camera
+-   [Player camera](src/Camera.ts)
 
-### Ogmo integration
+### OGMO Editor integration
+
+[Ogmo Editor](https://ogmo-editor-3.github.io/) is a simple open source level editor. Without a level selector in the game yet, you can change the level in the [Root component](src/Root.ts).
 
 ## Development
 
