@@ -3,22 +3,19 @@ import {
     useNewComponent,
     useDraw,
     SpriteSheet,
-    Canvas,
-    useRootEntity,
     SystemFont,
 } from "@hex-engine/2d";
 import { getPlayerData } from "./Player";
+import itemsImage from "../assets/platformer_pack/spritesheet_items.png";
 
 export default function LevelHUD(): void {
     useType(LevelHUD);
-
-    const canvas = useRootEntity().getComponent(Canvas);
 
     const playerData = getPlayerData();
 
     const image = useNewComponent(() =>
         SpriteSheet({
-            url: "assets/platformer_pack/spritesheet_items.png",
+            url: itemsImage,
             tileHeight: 128,
             tileWidth: 128,
         })

@@ -10,6 +10,7 @@ import {
     useUpdate,
 } from "@hex-engine/2d";
 import { usePhysicsEngine } from "./Root";
+import coinImage from "../assets/platformer_pack/spritesheet_items.png";
 
 export default function Coin(options: any): void {
     useType(Coin);
@@ -32,7 +33,7 @@ export default function Coin(options: any): void {
 
     const image = useNewComponent(() =>
         SpriteSheet({
-            url: "assets/platformer_pack/spritesheet_items.png",
+            url: coinImage,
             tileHeight: 128,
             tileWidth: 128,
         })

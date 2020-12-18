@@ -13,6 +13,7 @@ import {
     Component,
 } from "@hex-engine/2d";
 import { usePlayer } from "./Root";
+import playerSprite from "../assets/platformer_pack/spritesheet_players.png";
 
 export default function Player(options: any): void {
     useType(Player);
@@ -26,7 +27,7 @@ export default function Player(options: any): void {
     const restSprite = 19;
     let currentSprite = restSprite;
     let facingRight = true;
-    const isJumping = false;
+    let isJumping = false;
 
     const playerDataStorage = useNewComponent(PlayerDataStorage);
 
@@ -51,22 +52,24 @@ export default function Player(options: any): void {
             playerDataStorage.coins++;
             collider.entity.destroy();
         } else if (collider.entity?.name === "CollisionBox") {
-            if (
-                collider.kind === "start" &&
-                geometry.position.y > collider.body.position.y
-            ) {
-                // collider.body.collisionFilter.group = -1;
-                collider.body.collisionFilter.mask = 1000;
-            } else if (collider.kind === "end") {
-                collider.body.collisionFilter.mask =
-                    physics.body.collisionFilter.mask;
-            }
+            isJumping = false;
+            // TODO: Finish work to let player jump up through collision boxes
+            // if (
+            //     collider.kind === "start" &&
+            //     geometry.position.y > collider.body.position.y
+            // ) {
+            //     // collider.body.collisionFilter.group = -1;
+            //     collider.body.collisionFilter.mask = 1000;
+            // } else if (collider.kind === "end") {
+            //     collider.body.collisionFilter.mask =
+            //         physics.body.collisionFilter.mask;
+            // }
         }
     });
 
     const player = useNewComponent(() =>
         SpriteSheet({
-            url: "assets/platformer_pack/spritesheet_players.png",
+            url: playerSprite,
             tileWidth: 128,
             tileHeight: 256,
         })
@@ -91,7 +94,7 @@ export default function Player(options: any): void {
                 case "ArrowUp":
                 case "w":
                     if (!isJumping) {
-                        // isJumping = true;
+                        isJumping = true;
                         physics.setVelocity(
                             new Vector(physics.body.velocity.x, -6)
                         );
